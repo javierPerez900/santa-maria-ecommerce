@@ -10,7 +10,7 @@ Tienda online para un negocio que vende **al por menor y al por mayor**. Cada pr
 | [santaMaria](https://github.com/javierPerez900/santaMaria) | API REST en Go (Lambda + API Gateway) |
 | [santaMariaUser](https://github.com/javierPerez900/santaMariaUser) | Lambda en Go que guarda en la base de datos a cada usuario que confirma su cuenta en Cognito |
 
-**Demo:** [URL de Netlify]
+**Demo:** [URL de Netlify](https://santa-maria-ecommerce.netlify.app/product/caja-sublime-clasico)
 
 ## Stack
 
