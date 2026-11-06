@@ -6,7 +6,7 @@ Tienda online para un negocio que vende **al por menor y al por mayor**. Cada pr
 
 | Repositorio | Contenido |
 |---|---|
-| [santa-maria-ecommerce](https://github.com/javierPerez900/santa-maria-ecommerce) (este) | Frontend en Next.js |
+| **santa-maria-ecommerce** (este) | Frontend en Next.js |
 | [santaMaria](https://github.com/javierPerez900/santaMaria) | API REST en Go (Lambda + API Gateway) |
 | [santaMariaUser](https://github.com/javierPerez900/santaMariaUser) | Lambda en Go que guarda en la base de datos a cada usuario que confirma su cuenta en Cognito |
 
