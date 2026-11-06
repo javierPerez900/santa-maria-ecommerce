@@ -1,3 +1,17 @@
+E-commerce full-stack serverless en AWS
+
+Tienda online para un negocio que vende **al por menor y al por mayor**. Cada producto puede venderse por unidad, por caja o con precio por mayor a partir de cierta cantidad de unidades. Incluye catálogo público, carrito, checkout en 4 pasos, historial de pedidos y panel de administración.
+
+> Este repositorio es el **frontend**. El proyecto completo se compone de tres repositorios:
+
+| Repositorio | Contenido |
+|---|---|
+| [santa-maria-ecommerce](https://github.com/javierPerez900/santa-maria-ecommerce) (este) | Frontend en Next.js |
+| [santaMaria](https://github.com/javierPerez900/santaMaria) | API REST en Go (Lambda + API Gateway) |
+| [santaMariaUser](https://github.com/javierPerez900/santaMariaUser) | Lambda en Go que guarda en la base de datos a cada usuario que confirma su cuenta en Cognito |
+
+**Demo:** [URL de Netlify]
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
