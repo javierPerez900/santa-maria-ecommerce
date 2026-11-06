@@ -1,4 +1,4 @@
-E-commerce full-stack serverless en AWS
+# E-commerce full-stack serverless en AWS
 
 Tienda online para un negocio que vende **al por menor y al por mayor**. Cada producto puede venderse por unidad, por caja o con precio por mayor a partir de cierta cantidad de unidades. Incluye catálogo público, carrito, checkout en 4 pasos, historial de pedidos y panel de administración.
 
@@ -12,6 +12,15 @@ Tienda online para un negocio que vende **al por menor y al por mayor**. Cada pr
 
 **Demo:** [URL de Netlify]
 
+## Stack
+
+- **Next.js** (App Router) · **React** · **TypeScript**
+- **Material UI** para la interfaz y el tema
+- **AWS Amplify (Auth)** para integrar Cognito
+- **Formik** para formularios
+- **Netlify** para el despliegue
+
+    
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
