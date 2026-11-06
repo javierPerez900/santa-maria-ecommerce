@@ -52,7 +52,7 @@ export function Category({ category, onReload }: CategoryProps) {
               cursor: "pointer",
               fontSize: 24,
               "&:hover": {
-                color: "#058488",
+                color: "primary.main",
               },
             },
           }}

@@ -77,7 +77,12 @@ export function JoinLayout({
                   <Box>
                     <Typography
                       component="h3"
-                      sx={{ pb: "8px", fontWeight: 700, fontSize: 18 }}
+                      sx={{
+                        pb: "8px",
+                        fontWeight: 700,
+                        fontSize: 18,
+                        color: "text.primary",
+                      }}
                     >
                       {item.title}
                     </Typography>

@@ -67,7 +67,7 @@ export function UserList({
           </TableHead>
           <TableBody
             sx={{
-              "& tr:nth-of-type(odd)": { backgroundColor: "#f5f5f5" },
+              "& tr:nth-of-type(odd)": { backgroundColor: "action.hover" },
             }}
           >
             {map(users, (user) => (

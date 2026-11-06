@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Box } from "@mui/material";
 import { map } from "lodash";
 import { data } from "./GridCategories.data";
-import { Box } from "@mui/material";
 
 export function GridCategories() {
   return (
@@ -27,10 +27,14 @@ export function GridCategories() {
                 opacity: 0.7,
               },
               "& > h3": {
+                color: "text.primary",
                 mt: "10px",
                 fontSize: "14px",
               },
-              "& > img": { border: "2px solid #8f17be" },
+              "& > img": {
+                border: "2px solid",
+                borderColor: "secondary.light",
+              },
             }}
           >
             <Image

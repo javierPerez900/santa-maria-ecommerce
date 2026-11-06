@@ -52,7 +52,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     (async () => {
       try {
-        await login();
+        const token = await authCtrl.retrieveSession();
+        if (token) await login();
+        // await login();
       } catch (error) {
         console.error(error);
       } finally {

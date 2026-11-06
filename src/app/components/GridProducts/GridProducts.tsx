@@ -34,9 +34,14 @@ export function GridProducts({
 
   return (
     <Grid container spacing={1.5} sx={{ width: "100%", mb: 4 }}>
-      {map(products, (product) => (
+      {map(products, (product, index) => (
         <Grid key={product.prodID} size={getSizeByColumns(columns)}>
-          <Product product={product} classProduct={classProduct} />
+          {/* Solo la primera fila se carga con prioridad; el resto, de forma diferida */}
+          <Product
+            product={product}
+            classProduct={classProduct}
+            eager={index < columns}
+          />
         </Grid>
       ))}
     </Grid>

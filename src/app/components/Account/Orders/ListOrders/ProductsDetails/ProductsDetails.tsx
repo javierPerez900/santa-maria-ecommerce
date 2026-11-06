@@ -10,8 +10,9 @@ import { Product } from "@/interfaces/product";
 
 interface ProductsDetailsType extends Product {
   quantity: number;
+  unitPrice: number;
+  subtotal: number;
 }
-
 export function ProductsDetails({
   productsOrder,
 }: {
@@ -27,7 +28,13 @@ export function ProductsDetails({
         const productsTemp = [];
         for await (const item of productsOrder) {
           const response = await productCtrl.getById(item.odProdId);
-          productsTemp.push({ ...response, quantity: item.odQuantity });
+          // Cantidad y precios son los guardados al comprar, no los actuales del producto
+          productsTemp.push({
+            ...response,
+            quantity: item.odQuantity,
+            unitPrice: item.odUnitPrice,
+            subtotal: item.odPrice,
+          });
         }
         setProducts(productsTemp);
         setLoading(false);
@@ -42,45 +49,49 @@ export function ProductsDetails({
 
   return (
     <Box>
-      {map(products, (product) => (
-        <Box
-          key={product.prodID}
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            borderBottom: "1px solid",
-            borderBottomColor: "divider",
-            p: "15px 10px",
-            "&:last-of-type": {
-              border: 0,
-              pb: 0,
-            },
-            "& > div": {
+      {map(products, (product) => {
+        return (
+          <Box
+            key={product.prodID}
+            sx={{
               display: "flex",
               alignItems: "center",
-            },
-          }}
-        >
-          <Box>
-            <Image
-              src={fn.getUrlImage(product.prodID)}
-              alt={product.prodTitle}
-              width={70}
-              height={70}
-              style={{
-                marginRight: "20px",
-              }}
-            />
+              justifyContent: "space-between",
+              borderBottom: "1px solid",
+              borderBottomColor: "divider",
+              p: "15px 10px",
+              "&:last-of-type": {
+                border: 0,
+                pb: 0,
+              },
+              "& > div": {
+                display: "flex",
+                alignItems: "center",
+              },
+            }}
+          >
             <Box>
-              <h4>{product.prodTitle}</h4>
+              <Image
+                src={fn.getUrlImage(product.prodID)}
+                alt={product.prodTitle}
+                width={70}
+                height={70}
+                style={{
+                  marginRight: "20px",
+                }}
+              />
+              <Box>
+                <h4>{product.prodTitle}</h4>
+              </Box>
             </Box>
+            <p style={{ width: "200px", textAlign: "right" }}>
+              {product.quantity} x S/{product.unitPrice.toFixed(2)}
+              <br />
+              <strong>S/ {product.subtotal.toFixed(2)}</strong>
+            </p>
           </Box>
-          <p style={{ width: "200px", textAlign: "right" }}>
-            {product.quantity} x S/ {product.prodPrice}
-          </p>
-        </Box>
-      ))}
+        );
+      })}
     </Box>
   );
 }

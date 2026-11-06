@@ -35,6 +35,7 @@ export function Addresses({
         "& > h2": {
           mb: "15px",
           fontSize: "18px",
+          color: "text.primary",
         },
       }}
     >
@@ -48,69 +49,65 @@ export function Addresses({
           <Button
             component={Link}
             href="/account"
-            sx={{ color: "#f6f8f7", bgcolor: "#119c62" }}
+            sx={{ color: "primary.contrastText", bgcolor: "primary.main" }}
           >
             Crear dirección
           </Button>
         </Box>
       )}
 
-      {map(addresses, (item) => (
-        <Box
-          key={item.addId}
-          onClick={() => setAddress(item)}
-          sx={{
-            borderColor:
-              item.addId === address?.addId
-                ? "primary.main !important"
-                : "divider !important",
-            borderWidth:
-              item.addId === address?.addId ? "2px !important" : undefined,
-            "& > div > p:nth-of-type(1)": {
-              color:
-                item.addId === address?.addId
-                  ? "primary.main !important"
-                  : undefined,
-            },
-            border: "1px solid",
-            p: "20px",
-            mb: "20px",
-            borderRadius: "10px",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-
-            "&:hover": {
-              cursor: "pointer",
-              opacity: "0.6",
-            },
-
-            "& > div": {
-              display: "flex",
-            },
-          }}
-        >
+      {map(addresses, (item) => {
+        const isSelected = item.addId === address?.addId;
+        return (
           <Box
+            key={item.addId}
+            onClick={() => setAddress(item)}
             sx={{
-              "& > p:nth-of-type(1)": {
-                mr: "5px",
-                fontWeight: "bold",
-                fontSize: "16px",
+              border: "1px solid",
+              borderColor: isSelected ? "primary.main" : "divider",
+              borderWidth: isSelected ? "2px !important" : undefined,
+              "& > div > p:nth-of-type(1)": {
+                color: isSelected ? "primary.main" : undefined,
               },
-              "& > p:nth-of-type(2)": {
-                color: "text.secondary",
-                fontSize: "16px",
+              p: "20px",
+              mb: "20px",
+              borderRadius: "10px",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+
+              "&:hover": {
+                cursor: "pointer",
+                opacity: "0.8",
+              },
+
+              "& > div": {
+                display: "flex",
               },
             }}
           >
-            <p>{item.addTitle}</p>
-            <p>
-              {item.addName}, {item.addAddress}, {item.addState}, {item.addCity}
-              , {item.addPostalCode}
-            </p>
+            <Box
+              sx={{
+                "& > p:nth-of-type(1)": {
+                  mr: "5px",
+                  fontWeight: "bold",
+                  fontSize: "16px",
+                },
+                "& > p:nth-of-type(2)": {
+                  color: "text.secondary",
+                  fontSize: "16px",
+                },
+              }}
+            >
+              <p>{item.addTitle}</p>
+              <p>
+                {item.addName}, {item.addAddress}, {item.addState},{" "}
+                {item.addCity}, {item.addPostalCode}
+              </p>
+            </Box>
           </Box>
-        </Box>
-      ))}
+        );
+      })}
     </Box>
   );
 }

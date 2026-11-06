@@ -38,7 +38,7 @@ export default function HomePage() {
   return (
     <BasicLayout>
       <Separator height={50} />
-      <Container>
+      <Container sx={{ "& > h2": { color: "text.primary" } }}>
         <GridCategories />
 
         <Separator height={50} />

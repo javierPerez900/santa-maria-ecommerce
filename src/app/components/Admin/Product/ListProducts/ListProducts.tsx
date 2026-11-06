@@ -1,9 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { productCtrl } from "@/api";
-import { size, map } from "lodash";
-import { Loading, NoResult, Pagination } from "@/app/components/Shared";
-import { Product } from "./Product";
+import { useSearchParams } from "next/navigation";
 import {
   Table,
   TableHead,
@@ -14,7 +11,10 @@ import {
   Paper,
   Box,
 } from "@mui/material";
-import { useSearchParams } from "next/navigation";
+import { size, map } from "lodash";
+import { Loading, NoResult, Pagination } from "@/app/components/Shared";
+import { Product } from "./Product";
+import { productCtrl } from "@/api";
 import { Product as ProductType } from "@/interfaces/product";
 
 const ITEMS_PER_PAGE = 10;
@@ -63,16 +63,19 @@ export function ListProducts({
               <TableHead>
                 <TableRow>
                   <TableCell>ID</TableCell>
-                  <TableCell>Image</TableCell>
+                  <TableCell>Imagen</TableCell>
                   <TableCell>Nombre</TableCell>
-                  <TableCell>Precio</TableCell>
+                  <TableCell>Precio\unidad</TableCell>
+                  <TableCell>Precio\caja</TableCell>
+                  <TableCell>Unidades\caja</TableCell>
+                  <TableCell>Cantidad mínima x por mayor</TableCell>
                   <TableCell>Stock</TableCell>
                   <TableCell></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody
                 sx={{
-                  "& tr:nth-of-type(odd)": { backgroundColor: "#f5f5f5" },
+                  "& tr:nth-of-type(odd)": { backgroundColor: "action.hover" },
                 }}
               >
                 {map(products, (product) => (

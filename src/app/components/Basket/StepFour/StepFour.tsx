@@ -20,7 +20,11 @@ export function StepFour() {
       <Button
         component={Link}
         href="/account"
-        sx={{ color: "#f6f8f7", bgcolor: "#119c62", width: "300px" }}
+        sx={{
+          color: "primary.contrastText",
+          bgcolor: "primary.main",
+          width: "300px",
+        }}
       >
         Ver pedido
       </Button>

@@ -54,7 +54,7 @@ export function Search({
                   onClick={cleanSearch}
                   sx={{
                     fontSize: 20,
-                    color: "black",
+                    color: "text.secondary",
                     ml: 0.5,
                     mr: -0.5,
                     mt: 0.3,
@@ -65,7 +65,7 @@ export function Search({
                 <SearchIcon
                   sx={{
                     fontSize: 20,
-                    color: "#1E1E1E",
+                    color: "text.secondary",
                     ml: 0.5,
                     mr: -0.5,
                     mt: 0.3,

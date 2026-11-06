@@ -72,33 +72,6 @@ export function Product({ product, onReload }: ProductProps) {
     setOpenModal(true);
   };
 
-  const formatStockByPackaging = (product: ProductType) => {
-    const stock = product.prodStock;
-    const unitsPerBox = product.prodUnitsPerBox;
-
-    if (product.prodSellOnlyUnit === 1) {
-      return stock === 1 ? "1 unidad" : `${stock} unidades`;
-    }
-
-    if (!unitsPerBox || unitsPerBox <= 0) {
-      return stock === 1 ? "1 unidad" : `${stock} unidades`;
-    }
-
-    const boxes = Math.floor(stock / unitsPerBox);
-    const units = stock % unitsPerBox;
-
-    const boxesText =
-      boxes === 1 ? "1 caja" : boxes > 0 ? `${boxes} cajas` : "";
-
-    const unitsText =
-      units === 1 ? "1 unidad" : units > 0 ? `${units} unidades` : "";
-
-    if (boxesText && unitsText) {
-      return `${boxesText} y ${unitsText}`;
-    }
-
-    return boxesText || unitsText || "0 unidades";
-  };
   return (
     <>
       <TableCell>{product.prodID}</TableCell>
@@ -114,7 +87,18 @@ export function Product({ product, onReload }: ProductProps) {
       </TableCell>
       <TableCell>{product.prodTitle}</TableCell>
       <TableCell>S/ {product.prodPrice}</TableCell>
-      <TableCell>{formatStockByPackaging(product)}</TableCell>
+      <TableCell>
+        {product.prodPriceBox ? `S/ ${product.prodPriceBox}` : "No aplica"}
+      </TableCell>
+      <TableCell>
+        {product.prodUnitsPerBox ? product.prodUnitsPerBox : "No aplica"}
+      </TableCell>
+      <TableCell>
+        {product.prodWholesaleMinQty
+          ? product.prodWholesaleMinQty
+          : "No aplica"}
+      </TableCell>
+      <TableCell>{fn.formatStockByPackaging(product)}</TableCell>
       <TableCell align="right">
         <Box
           sx={{
@@ -126,7 +110,7 @@ export function Product({ product, onReload }: ProductProps) {
               cursor: "pointer",
               fontSize: 24,
               "&:hover": {
-                color: "#058488",
+                color: "primary.main",
               },
             },
           }}

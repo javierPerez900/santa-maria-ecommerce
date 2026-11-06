@@ -49,17 +49,19 @@ export function Order({ order }: { order: OrderType }) {
       >
         <ProductsDetails productsOrder={order.OrderDetails} />
         <AddressDetails addressId={order.orderAddId} />
-        <p
-          style={{
-            marginTop: "20px",
+        <Box
+          component="p"
+          sx={{
+            mt: "20px",
             textAlign: "right",
             color: "primary.main",
-            fontWeight: "bold",
-            fontSize: "25px",
+            fontWeight: 700,
+            fontSize: 25,
+            m: 0,
           }}
         >
           S/ {order.orderTotal}
-        </p>
+        </Box>
       </BasicModal>
     </>
   );

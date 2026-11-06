@@ -71,12 +71,12 @@ export function ConfirmationForm() {
       <Button
         type="submit"
         fullWidth
-        sx={{ color: "#f6f8f7", bgcolor: "#119c62" }}
         loading={formik.isSubmitting}
+        sx={{ color: "primary.contrastText", bgcolor: "primary.main" }}
       >
         Activar usuario
       </Button>
-      <Separator height={100} />
+      <Separator height={75} />
       <Button
         fullWidth
         variant="outlined"

@@ -15,64 +15,62 @@ export function Payments({
         "& > h2": {
           mb: "15px",
           fontSize: "18px",
+          color: "text.primary",
         },
       }}
     >
       <h2>Métodos de pago</h2>
 
-      {map(paymentsData, (item) => (
-        <Box
-          key={item.id}
-          onClick={() => setPaymentSelected(item)}
-          sx={{
-            borderColor:
-              item.id === paymentSelected?.id
-                ? "primary.main !important"
-                : "divider",
-            borderWidth:
-              item.id === paymentSelected?.id ? "2px !important" : undefined,
-            "& > div > p:nth-of-type(1)": {
-              color:
-                item.id === paymentSelected?.id
-                  ? "primary.main !important"
-                  : undefined,
-            },
-            border: "1px solid",
-            p: "20px",
-            mb: "20px",
-            borderRadius: "10px",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-
-            "&:hover": {
-              cursor: "pointer",
-              opacity: "0.6",
-            },
-
-            "& > div": {
-              display: "flex",
-            },
-          }}
-        >
+      {map(paymentsData, (item) => {
+        const isSelected = item.id === paymentSelected?.id;
+        return (
           <Box
+            key={item.id}
+            onClick={() => setPaymentSelected(item)}
             sx={{
-              "& > p:nth-of-type(1)": {
-                mr: "5px",
-                fontWeight: "bold",
-                fontSize: "16px",
+              border: "1px solid",
+              borderColor: isSelected ? "primary.main" : "divider",
+              borderWidth: isSelected ? "2px !important" : undefined,
+              "& > div > p:nth-of-type(1)": {
+                color: isSelected ? "primary.main" : undefined,
               },
-              "& > p:nth-of-type(2)": {
-                color: "text.secondary",
-                fontSize: "16px",
+
+              p: "20px",
+              mb: "20px",
+              borderRadius: "10px",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+
+              "&:hover": {
+                cursor: "pointer",
+                opacity: "0.8",
+              },
+
+              "& > div": {
+                display: "flex",
               },
             }}
           >
-            <p>{item.name}: </p>
-            <p>{item.description}</p>
+            <Box
+              sx={{
+                "& > p:nth-of-type(1)": {
+                  mr: "5px",
+                  fontWeight: "bold",
+                  fontSize: "16px",
+                },
+                "& > p:nth-of-type(2)": {
+                  color: "text.secondary",
+                  fontSize: "16px",
+                },
+              }}
+            >
+              <p>{item.name}: </p>
+              <p>{item.description}</p>
+            </Box>
           </Box>
-        </Box>
-      ))}
+        );
+      })}
     </Box>
   );
 }

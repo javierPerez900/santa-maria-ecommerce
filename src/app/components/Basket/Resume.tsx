@@ -4,6 +4,7 @@ import { Box, Button } from "@mui/material";
 import { useRouter, useSearchParams } from "next/navigation";
 import { forEach } from "lodash";
 import { useAuth } from "@/hooks";
+import { fn } from "@/utils/functions";
 import { BasketProduct } from "@/interfaces/product";
 
 export function Resume({
@@ -25,7 +26,7 @@ export function Resume({
   useEffect(() => {
     let totalTemp = 0;
     forEach(products, (product) => {
-      totalTemp += product.prodPrice * product.quantity;
+      totalTemp += fn.computeTotalPrice(product.quantity, product);
     });
     // eslint-disable-next-line react-hooks/set-state-in-effect -- lectura inicial de localStorage, no disponible durante SSR
     setTotal(totalTemp);
@@ -58,6 +59,7 @@ export function Resume({
         "& > h2": {
           fontSize: "16px",
           mb: "10px",
+          color: "text.primary",
         },
       }}
     >
@@ -88,7 +90,7 @@ export function Resume({
       </Box>
       <Button
         fullWidth
-        sx={{ color: "#f6f8f7", bgcolor: "#119c62" }}
+        sx={{ color: "primary.contrastText", bgcolor: "primary.main" }}
         disabled={nextDisabled}
         onClick={goToNextStep}
       >

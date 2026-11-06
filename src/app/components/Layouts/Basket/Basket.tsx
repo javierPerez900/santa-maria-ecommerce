@@ -23,7 +23,7 @@ export function Basket() {
         sx={{
           mr: "10px",
           "& .MuiBadge-badge": {
-            backgroundColor: "#00BCD4",
+            backgroundColor: "primary.light",
             color: "white",
           },
         }}

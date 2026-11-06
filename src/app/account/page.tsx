@@ -69,7 +69,6 @@ export default function AccountPage() {
       <Container>
         <Box
           sx={{
-            bgcolor: "background.paper",
             display: "flex",
             minHeight: 400,
           }}
@@ -83,6 +82,9 @@ export default function AccountPage() {
               mt: "50px",
               "& .MuiTabs-indicator": {
                 width: 4,
+                height: "30px !important",
+                marginTop: "5px",
+                borderRadius: 2,
               },
               "& .MuiTab-root": {
                 textTransform: "none",

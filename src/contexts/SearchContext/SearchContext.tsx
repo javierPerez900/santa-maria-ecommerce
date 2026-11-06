@@ -7,13 +7,17 @@ import { productCtrl } from "@/api";
 import { GridProducts } from "@/app/components/GridProducts/GridProducts";
 import { Product } from "@/interfaces/product";
 
+const SEARCH_PAGE_SIZE = 100;
+
 export function SearchProvider({ children }: { children: React.ReactNode }) {
   const searchParams = useSearchParams();
+  const search = searchParams.get("search") || "";
+
   const [products, setProducts] = useState<Product[] | null>(null);
   const [totalItems, setTotalItems] = useState(0);
 
   useEffect(() => {
-    if (searchParams.get("search")) {
+    if (search) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
@@ -21,33 +25,43 @@ export function SearchProvider({ children }: { children: React.ReactNode }) {
     return () => {
       document.body.style.overflow = "";
     };
-  }, [searchParams.get("search")]);
+  }, [search]);
 
   useEffect(() => {
+    if (!search) return;
+
+    let cancelled = false;
+
     (async () => {
       try {
         setProducts(null);
-        const response = await productCtrl.getAll(
-          1,
-          100000,
-          searchParams.get("search") || "",
-        );
+        const response = await productCtrl.getAll(1, SEARCH_PAGE_SIZE, search);
+
+        if (cancelled) return;
+
         setProducts(response.data || []);
         setTotalItems(response.totalItems || 0);
       } catch (error) {
+        if (cancelled) return;
         console.error(error);
+        setProducts([]);
+        setTotalItems(0);
       }
     })();
-  }, [searchParams.get("search")]);
+
+    return () => {
+      cancelled = true;
+    };
+  }, [search]);
 
   return (
     <>
       {children}
-      {searchParams.get("search") && (
+      {search && (
         <Box
           sx={{
             position: "absolute",
-            top: "70px",
+            top: "105px",
             left: 0,
             width: "100%",
             height: "calc(100% - 70px)",
@@ -63,7 +77,7 @@ export function SearchProvider({ children }: { children: React.ReactNode }) {
           }}
         >
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-            <p>Buscando: {searchParams.get("search")}</p>
+            <p>Buscando: {search}</p>
             <p>{totalItems} resultados</p>
           </Box>
           <Separator height={20} />

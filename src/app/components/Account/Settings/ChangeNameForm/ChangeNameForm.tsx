@@ -54,7 +54,7 @@ export function ChangeNameForm() {
         type="submit"
         fullWidth
         loading={formik.isSubmitting}
-        sx={{ color: "#f6f8f7", bgcolor: "#119c62" }}
+        sx={{ color: "primary.contrastText", bgcolor: "primary.main" }}
       >
         Enviar
       </Button>

@@ -5,11 +5,11 @@ export function Logo() {
   return (
     <Link href="/">
       <Image
-        src="/images/logo-texto.png"
+        src="/images/logo-santa-maria.jpeg"
         alt="santa-maria-logo"
-        width={200}
-        height={50}
-        style={{ height: 50, width: "auto" }}
+        width={256}
+        height={171}
+        style={{ height: 85.33, width: "auto" }}
         loading="eager"
       />
     </Link>

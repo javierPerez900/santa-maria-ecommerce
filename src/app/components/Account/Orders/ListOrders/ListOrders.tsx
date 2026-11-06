@@ -26,7 +26,7 @@ export function ListOrders() {
   }
 
   return (
-    <Box>
+    <Box sx={{ bgcolor: "background.paper" }}>
       {size(orders) === 0 && <NoResult text="No tienes pedidos realizados" />}
       {map(orders, (order) => (
         <Order key={order.orderId} order={order} />

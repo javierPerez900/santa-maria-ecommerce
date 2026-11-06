@@ -4,28 +4,42 @@ import { createTheme } from "@mui/material/styles";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#058488",
-      dark: "#025e61",
+      main: "#3D4ED8",
+      dark: "#2F3DB8",
+      light: "#5B6CFF",
+      contrastText: "#fff",
+    },
+    secondary: {
+      main: "#6E5AE8",
+      dark: "#5846C7",
+      light: "#8B7CF0",
       contrastText: "#fff",
     },
     text: {
-      primary: "#333",
-      secondary: "#888",
+      primary: "#1C2333",
+      secondary: "#5C6578",
     },
     background: {
-      default: "#fff",
-      paper: "#f2f2f2",
+      default: "#E3EFF8",
+      paper: "#FFFFFF",
     },
     success: {
-      main: "#69af00",
+      main: "#2F9E6B",
+      contrastText: "#fff",
     },
     warning: {
-      main: "#ff6000",
+      main: "#E07A2F",
+      contrastText: "#fff",
     },
     error: {
-      main: "#ff0a4e",
+      main: "#E11D48",
+      contrastText: "#fff",
     },
-    divider: "#cccccc",
+    divider: "#C5D0DE",
+    action: {
+      hover: "rgba(61, 78, 216, 0.06)",
+      selected: "rgba(61, 78, 216, 0.10)",
+    },
   },
 });
 

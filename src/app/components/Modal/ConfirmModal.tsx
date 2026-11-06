@@ -31,14 +31,14 @@ export default function ConfirmModal(props: ConfirmModalProps) {
         <Button
           autoFocus
           onClick={onCancel}
-          sx={{ color: "#4e5552", borderColor: "#4e5552" }}
+          sx={{ color: "text.secondary", borderColor: "text.secondary" }}
         >
           Cancel
         </Button>
         <Button
           loading={loading}
           onClick={onConfirmWrapper}
-          sx={{ color: "#f6f8f7", bgcolor: "#119c62" }}
+          sx={{ color: "primary.contrastText", bgcolor: "primary.main" }}
         >
           Ok
         </Button>

@@ -9,11 +9,11 @@ export function initialValues(product: ProductType | null) {
     ProdStock: product?.prodStock || "",
     ProdPath: product?.prodPath || "",
     ProdCategId: product?.prodCategId || "",
-    prodPriceBox: product?.prodPriceBox || "",
-    prodUnitsPerBox: product?.prodUnitsPerBox || "",
-    prodWholesaleMinQty: product?.prodWholesaleMinQty || "",
-    prodPriceWholesaleUnit: product?.prodPriceWholesaleUnit || "",
-    prodSellOnlyUnit: product?.prodSellOnlyUnit || "",
+    ProdPriceBox: product?.prodPriceBox || "",
+    ProdUnitsPerBox: product?.prodUnitsPerBox || "",
+    ProdWholesaleMinQty: product?.prodWholesaleMinQty || "",
+    ProdPriceWholesaleUnit: product?.prodPriceWholesaleUnit || "",
+    ProdSellOnlyUnit: product?.prodSellOnlyUnit ?? "",
   };
 }
 
@@ -22,13 +22,49 @@ export function validationSchema() {
     ProdTitle: Yup.string().required(),
     ProdDescription: Yup.string().required(),
     ProdPrice: Yup.number().required(),
-    ProdStock: Yup.number().required(),
+    ProdStock: Yup.number().integer().required(),
     ProdPath: Yup.string().required(),
     ProdCategId: Yup.number().required(),
-    prodPriceBox: Yup.number().required(),
-    prodUnitsPerBox: Yup.number().required(),
-    prodWholesaleMinQty: Yup.number().required(),
-    prodPriceWholesaleUnit: Yup.number().required(),
-    prodSellOnlyUnit: Yup.number().required(),
+    ProdPriceBox: Yup.number()
+      .transform((value, originalValue) =>
+        originalValue === "" ? undefined : value,
+      )
+      .when("ProdSellOnlyUnit", {
+        is: 0,
+        then: (schema) => schema.required(),
+        otherwise: (schema) => schema.notRequired(),
+      }),
+    ProdUnitsPerBox: Yup.number()
+      .integer()
+      .transform((value, originalValue) =>
+        originalValue === "" ? undefined : value,
+      )
+      .when("ProdSellOnlyUnit", {
+        is: 0,
+        then: (schema) => schema.required(),
+        otherwise: (schema) => schema.notRequired(),
+      }),
+
+    ProdWholesaleMinQty: Yup.number()
+      .integer()
+      .transform((value, originalValue) =>
+        originalValue === "" ? undefined : value,
+      )
+      .when("ProdSellOnlyUnit", {
+        is: 0,
+        then: (schema) => schema.required(),
+        otherwise: (schema) => schema.notRequired(),
+      }),
+
+    ProdPriceWholesaleUnit: Yup.number()
+      .transform((value, originalValue) =>
+        originalValue === "" ? undefined : value,
+      )
+      .when("ProdSellOnlyUnit", {
+        is: 0,
+        then: (schema) => schema.required(),
+        otherwise: (schema) => schema.notRequired(),
+      }),
+    ProdSellOnlyUnit: Yup.number().required(),
   });
 }

@@ -13,8 +13,20 @@ import {
 export function BasicLayout({ children }: { children: React.ReactNode }) {
   const { isAdmin } = useAuth();
   return (
-    <>
-      <Box sx={{ borderBottom: "1px solid", borderColor: "divider" }}>
+    <Box
+      sx={{
+        minHeight: "100vh",
+        bgcolor: "background.default",
+        color: "text.primary",
+      }}
+    >
+      <Box
+        sx={{
+          borderBottom: "1px solid",
+          borderColor: "divider",
+          bgcolor: "background.default",
+        }}
+      >
         <Container
           sx={{
             display: "flex !important",
@@ -52,12 +64,18 @@ export function BasicLayout({ children }: { children: React.ReactNode }) {
         </Container>
       </Box>
 
-      <Box sx={{ borderBottom: "1px solid", borderColor: "divider" }}>
+      <Box
+        sx={{
+          borderBottom: "1px solid",
+          borderColor: "divider",
+          bgcolor: "background.default",
+        }}
+      >
         <Container>
           <CategoriesMenu />
         </Container>
       </Box>
       {children}
-    </>
+    </Box>
   );
 }

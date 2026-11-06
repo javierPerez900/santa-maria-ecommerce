@@ -16,7 +16,7 @@ export function AddAddress({ onReload }: { onReload: () => void }) {
         sx={{
           maxWidth: "200px",
           textTransform: "none",
-          color: "white",
+          color: "primary.contrastText",
           bgcolor: "primary.main",
         }}
       >

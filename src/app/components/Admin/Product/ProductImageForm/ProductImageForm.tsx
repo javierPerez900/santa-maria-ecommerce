@@ -109,7 +109,7 @@ export function ProductImageForm({
         onClick={() => formik.handleSubmit()}
         fullWidth
         loading={loading}
-        sx={{ color: "#f6f8f7", bgcolor: "#119c62" }}
+        sx={{ color: "primary.contrastText", bgcolor: "primary.main" }}
       >
         Enviar
       </Button>

@@ -1,11 +1,11 @@
-import { BasicLayout } from "@/app/components/Layouts";
 import { Box, Container } from "@mui/material";
-import { Separator } from "@/app/components/Shared";
-import { productCtrl } from "@/api";
 import { notFound } from "next/navigation";
+import { BasicLayout } from "@/app/components/Layouts";
+import { Separator } from "@/app/components/Shared";
 import { ProductImage } from "@/app/components/Product/ProductImage";
 import { Info } from "@/app/components/Product/Info";
 import { Description } from "@/app/components/Product/Description";
+import { productCtrl } from "@/api";
 import { Product as ProductType } from "@/interfaces/product";
 
 interface ProductPageProps {
@@ -30,11 +30,10 @@ export default async function ProductPage({
     );
   }
 
-  let product: ProductType;
+  let product: ProductType | null;
 
   try {
-    const response = await productCtrl.getBySlug(slug);
-    product = response;
+    product = await productCtrl.getBySlug(slug);
   } catch (error: unknown) {
     const err = error as { status?: number };
 
@@ -43,6 +42,10 @@ export default async function ProductPage({
     }
 
     throw error;
+  }
+
+  if (!product) {
+    notFound();
   }
 
   return (
