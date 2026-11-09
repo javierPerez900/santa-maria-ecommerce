@@ -2,6 +2,8 @@
 
 Tienda online para un negocio que vende **al por menor y al por mayor**. Cada producto puede venderse por unidad, por caja o con precio por mayor a partir de cierta cantidad de unidades. Incluye catálogo público, carrito, checkout en 4 pasos, historial de pedidos y panel de administración.
 
+El cómputo (Lambda), la API (API Gateway) y la autenticación (Cognito) son serverless; la base de datos es una instancia de Amazon RDS para MySQL.
+
 > Este repositorio es el **frontend**. El proyecto completo se compone de tres repositorios:
 
 | Repositorio | Contenido |
@@ -10,7 +12,7 @@ Tienda online para un negocio que vende **al por menor y al por mayor**. Cada pr
 | [santaMaria](https://github.com/javierPerez900/santaMaria) | API REST en Go (Lambda + API Gateway) |
 | [santaMariaUser](https://github.com/javierPerez900/santaMariaUser) | Lambda en Go que guarda en la base de datos a cada usuario que confirma su cuenta en Cognito |
 
-**Demo:** [URL de Netlify](https://santa-maria-ecommerce.netlify.app/product/caja-sublime-clasico)
+**Demo:** [Ver demo](https://santa-maria-ecommerce.netlify.app)
 
 ## Stack
 
