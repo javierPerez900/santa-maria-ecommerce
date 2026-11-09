@@ -21,7 +21,7 @@ El cómputo (Lambda), la API (API Gateway) y la autenticación (Cognito) son ser
 - **AWS Amplify (Auth)** para integrar Cognito
 - **Formik** para formularios
 - **Netlify** para el despliegue
-
+- 
     
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
