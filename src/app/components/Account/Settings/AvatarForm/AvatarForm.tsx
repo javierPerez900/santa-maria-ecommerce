@@ -8,37 +8,46 @@ import { useAuth } from "@/hooks";
 import { initialValues, validationSchema } from "./AvatarForm.form";
 import { userCtrl } from "@/api";
 
+//El parámetro ?v= obliga a pedir la nueva imagen.
+const withVersion = (url: string, version: number) => `${url}?v=${version}`;
+
 export function AvatarForm() {
   const [loading, setLoading] = useState(false);
   const [avatar, setAvatar] = useState<string | null>(null);
   const { user } = useAuth();
+  const userUUID = user?.userUUID;
 
   const formik = useFormik({
     initialValues: initialValues(),
     validationSchema: validationSchema(),
     validateOnChange: false,
-    onSubmit: async (formValue) => {
+    onSubmit: async (formValue, { resetForm }) => {
+      if (!formValue.file) return;
+      if (!userUUID) return;
+
       try {
         setLoading(true);
-        if (!formValue.file) return;
-        if (!user || !user.userUUID) return;
-        await userCtrl.updateAvatar(user.userUUID, formValue.file);
-        setLoading(false);
+        await userCtrl.updateAvatar(userUUID, formValue.file);
+
+        // La imagen ya está en S3: se muestra con una URL nueva para saltarse la caché
+        setAvatar(withVersion(fn.getUrlImage(userUUID), Date.now()));
+        resetForm();
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     },
   });
 
   useEffect(() => {
-    if (!user) return;
-    if (formik.values.file) return;
+    if (!userUUID) return;
 
-    const imageUrl = fn.getUrlImage(user.userUUID as string);
+    const imageUrl = withVersion(fn.getUrlImage(userUUID), Date.now());
     fn.checkIfImageExists(imageUrl, (exists) => {
       setAvatar(exists ? imageUrl : null);
     });
-  }, [formik.values.file]);
+  }, [userUUID]);
 
   const displayAvatar = formik.values.file ? formik.values.preview : avatar;
 

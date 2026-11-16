@@ -1,27 +1,41 @@
 "use client";
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { useState } from "react";
+import { Alert, Box, Button, TextField, Typography } from "@mui/material";
 import Link from "next/link";
 import { useAuth } from "@/hooks";
 import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
 import { initialValues, validationSchema } from "./LoginForm.form";
 import { authCtrl } from "@/api";
+import { authErrorName, getAuthError } from "@/utils/authErrors";
 
 export function LoginForm() {
   const { login } = useAuth();
   const router = useRouter();
+  const [authError, setAuthError] = useState<string | null>(null);
 
   const formik = useFormik({
     initialValues: initialValues(),
     validationSchema: validationSchema(),
     validateOnChange: false,
     onSubmit: async (formValue) => {
+      setAuthError(null);
+
       try {
         await authCtrl.login(formValue.email, formValue.password);
         await login();
         router.push("/");
       } catch (error) {
-        console.error(error);
+        if (authErrorName(error) === "UserNotConfirmedException") {
+          router.push(
+            `/join/confirmation?email=${encodeURIComponent(formValue.email)}`,
+          );
+          return;
+        }
+
+        const { message, unexpected } = getAuthError(error, "login");
+        if (unexpected) console.error(error);
+        setAuthError(message);
       }
     },
   });
@@ -50,6 +64,11 @@ export function LoginForm() {
           onChange={formik.handleChange}
           error={!!formik.errors.password}
         />
+        {authError && (
+          <Alert severity="error" sx={{ mb: 1.5 }}>
+            {authError}
+          </Alert>
+        )}
         <Button
           type="submit"
           fullWidth

@@ -6,7 +6,7 @@ import { useAuth } from "@/hooks";
 import { userCtrl } from "@/api";
 
 export function ChangeNameForm() {
-  const { user } = useAuth();
+  const { user, updateUser } = useAuth();
 
   const formik = useFormik({
     initialValues: initialValues(
@@ -18,6 +18,11 @@ export function ChangeNameForm() {
     onSubmit: async (formValue) => {
       try {
         await userCtrl.updateMe(formValue);
+
+        // El servidor ya lo guardó: se actualiza también la copia en memoria,
+        // para que al volver a esta pestaña se vea el nombre nuevo
+        updateUser("userFirstName", formValue.userFirstName);
+        updateUser("userLastName", formValue.userLastName);
       } catch (error) {
         console.error(error);
       }

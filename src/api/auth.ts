@@ -8,6 +8,12 @@ import {
   signOut,
 } from "@aws-amplify/auth";
 
+function authStepError(name: string, message: string) {
+  const error = new Error(message);
+  error.name = name;
+  return error;
+}
+
 async function register(email: string, password: string) {
   try {
     const response = await signUp({
@@ -42,10 +48,30 @@ async function resendCode(email: string) {
 
 async function login(email: string, password: string) {
   try {
-    await signIn({
+    const { isSignedIn, nextStep } = await signIn({
       username: email,
       password,
     });
+
+    if (!isSignedIn) {
+      switch (nextStep.signInStep) {
+        case "CONFIRM_SIGN_UP":
+          throw authStepError(
+            "UserNotConfirmedException",
+            "User is not confirmed.",
+          );
+        case "RESET_PASSWORD":
+          throw authStepError(
+            "PasswordResetRequiredException",
+            "Password reset required.",
+          );
+        default:
+          throw authStepError(
+            "UnsupportedSignInStep",
+            `Paso de inicio de sesión no soportado: ${nextStep.signInStep}`,
+          );
+      }
+    }
 
     const session = await getCurrentUser();
 

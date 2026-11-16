@@ -17,6 +17,30 @@ export function initialValues(product: ProductType | null) {
   };
 }
 
+export type ProductFormValues = ReturnType<typeof initialValues>;
+
+export function toPayload(values: ProductFormValues) {
+  const sellOnlyUnit = Number(values.ProdSellOnlyUnit) === 1;
+
+  const payload: Record<string, string | number> = {
+    ProdTitle: values.ProdTitle.trim(),
+    ProdDescription: values.ProdDescription,
+    ProdPath: values.ProdPath.trim(),
+    ProdCategId: Number(values.ProdCategId),
+    ProdPrice: Number(values.ProdPrice),
+    ProdStock: Number(values.ProdStock),
+    ProdSellOnlyUnit: Number(values.ProdSellOnlyUnit),
+  };
+
+  if (!sellOnlyUnit) {
+    payload.ProdPriceBox = Number(values.ProdPriceBox);
+    payload.ProdUnitsPerBox = Number(values.ProdUnitsPerBox);
+    payload.ProdWholesaleMinQty = Number(values.ProdWholesaleMinQty);
+  }
+
+  return payload;
+}
+
 export function validationSchema() {
   return Yup.object({
     ProdTitle: Yup.string().required(),

@@ -23,6 +23,9 @@ export function Order({ order }: { order: OrderType }) {
           p: "10px",
           mb: "10px",
           backgroundColor: "background.paper",
+          border: "1px solid",
+          borderColor: "divider",
+          borderRadius: "6px",
           "& > div > span": {
             color: "text.secondary",
             fontSize: "12px",

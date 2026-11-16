@@ -2,48 +2,72 @@
 import { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useFormik } from "formik";
-import { Box, Button, TextField } from "@mui/material";
+import { Alert, Box, Button, TextField } from "@mui/material";
 import { Separator } from "@/app/components/Shared";
 import {
   initialValues,
   validationSchema,
 } from "@/app/components/Auth/ConfirmationForm/ConfirmationForm.form";
 import { authCtrl } from "@/api";
+import { getAuthError } from "@/utils/authErrors";
+
+interface Feedback {
+  severity: "error" | "success";
+  message: string;
+}
 
 export function ConfirmationForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams?.get("email");
   const [loading, setLoading] = useState<boolean>(false);
+  const [feedback, setFeedback] = useState<Feedback | null>(null);
 
   const formik = useFormik({
     initialValues: initialValues(),
     validationSchema: validationSchema(),
     validateOnChange: false,
     onSubmit: async (formValue) => {
+      setFeedback(null);
+
       try {
         await authCtrl.confirmation(formValue.email, formValue.code);
         router.push("/join/login");
       } catch (error) {
-        console.error(error);
+        const { message, unexpected } = getAuthError(error, "confirm");
+        if (unexpected) console.error(error);
+        setFeedback({ severity: "error", message });
       }
     },
   });
 
   const onResendCode = async () => {
     formik.setFieldError("email", undefined);
+    setFeedback(null);
+
     if (!formik.values.email) {
       formik.setFieldError("email", "Email inválido");
       return;
     }
 
     setLoading(true);
-    await authCtrl.resendCode(formik.values.email);
-    setLoading(false);
+    try {
+      await authCtrl.resendCode(formik.values.email);
+      setFeedback({
+        severity: "success",
+        message: "Te enviamos un nuevo código a tu correo.",
+      });
+    } catch (error) {
+      const { message, unexpected } = getAuthError(error, "resend");
+      if (unexpected) console.error(error);
+      setFeedback({ severity: "error", message });
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
-    formik.setFieldValue("email", email);
+    formik.setFieldValue("email", email ?? "");
   }, [searchParams]);
 
   return (
@@ -68,6 +92,11 @@ export function ConfirmationForm() {
         onChange={formik.handleChange}
         error={!!formik.errors.code}
       />
+      {feedback && (
+        <Alert severity={feedback.severity} sx={{ mb: 1.5 }}>
+          {feedback.message}
+        </Alert>
+      )}
       <Button
         type="submit"
         fullWidth

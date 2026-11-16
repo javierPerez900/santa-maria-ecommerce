@@ -21,16 +21,16 @@ async function createOrder(data: object) {
   }
 }
 
-async function getAllOrders() {
+async function getAllOrders(page = 1, pageSize = 10) {
   try {
-    const url = `${ENV.API_URL}/${ENV.ENDPOINTS.ORDER}`;
+    const filters = `page=${page}&pageSize=${pageSize}`;
+    const url = `${ENV.API_URL}/${ENV.ENDPOINTS.ORDER}?${filters}`;
 
     const response = await authFetch(url);
-    const result = await response?.json();
 
     if (response.status !== 200) throw response;
 
-    return result;
+    return await response.json();
   } catch (error) {
     throw error;
   }

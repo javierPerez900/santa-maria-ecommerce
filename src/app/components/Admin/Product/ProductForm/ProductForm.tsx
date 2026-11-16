@@ -1,8 +1,15 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Box, TextField, Button, MenuItem, Grid } from "@mui/material";
+import {
+  Box,
+  TextField,
+  Button,
+  MenuItem,
+  Grid,
+  FormHelperText,
+} from "@mui/material";
 import { useFormik } from "formik";
-import { initialValues, validationSchema } from "./ProductForm.form";
+import { initialValues, validationSchema, toPayload } from "./ProductForm.form";
 import { map } from "lodash";
 import { Editor } from "@tinymce/tinymce-react";
 import { Separator } from "@/app/components/Shared";
@@ -39,17 +46,19 @@ export function ProductForm({
   const [showWholesaleFields, setShowWholesaleFields] = useState<boolean>(
     product != null && Number(product.prodSellOnlyUnit) === 0,
   );
-  console.log("product", product);
+
   const formik = useFormik({
     initialValues: initialValues(product),
     validationSchema: validationSchema(),
     validateOnChange: false,
     onSubmit: async (formValue) => {
       try {
+        const payload = toPayload(formValue);
+
         if (product) {
-          await productCtrl.update(formValue, product.prodID);
+          await productCtrl.update(payload, product.prodID);
         } else {
-          await productCtrl.create(formValue);
+          await productCtrl.create(payload);
         }
         onReload();
         onClose();
@@ -58,6 +67,9 @@ export function ProductForm({
       }
     },
   });
+
+  const descriptionError =
+    !!formik.errors.ProdDescription && !formik.values.ProdDescription;
 
   useEffect(() => {
     (async () => {
@@ -109,42 +121,56 @@ export function ProductForm({
         onChange={formik.handleChange}
         error={!!formik.errors.ProdPath}
       />
-      <Editor
-        apiKey="fm9jpxk1vtc89f520fgu42zr0pv9algse2p8wyd1kioswbh1"
-        init={{
-          height: 400,
-          menubar: false,
-          toolbar_mode: "wrap",
-          plugins: [
-            "advlist",
-            "autolink",
-            "lists",
-            "link",
-            "image",
-            "charmap",
-            "anchor",
-            "searchreplace",
-            "visualblocks",
-            "code",
-            "fullscreen",
-            "insertdatetime",
-            "media",
-            "table",
-            "preview",
-            "help",
-            "wordcount",
-          ],
-          toolbar:
-            "undo redo | blocks | code |" +
-            "bold italic forecolor | alignleft aligncenter " +
-            "alignright alignjustify | bullist numlist outdent indent | " +
-            "removeformat | help",
+
+      <Box
+        sx={{
+          borderRadius: "6px",
+          boxShadow: (theme) =>
+            descriptionError ? `0 0 0 2px ${theme.palette.error.main}` : "none",
         }}
-        initialValue={formik.values.ProdDescription}
-        onBlur={(event) =>
-          formik.setFieldValue("ProdDescription", event.target.getContent())
-        }
-      />
+      >
+        <Editor
+          apiKey="fm9jpxk1vtc89f520fgu42zr0pv9algse2p8wyd1kioswbh1"
+          init={{
+            height: 400,
+            menubar: false,
+            toolbar_mode: "wrap",
+            plugins: [
+              "advlist",
+              "autolink",
+              "lists",
+              "link",
+              "image",
+              "charmap",
+              "anchor",
+              "searchreplace",
+              "visualblocks",
+              "code",
+              "fullscreen",
+              "insertdatetime",
+              "media",
+              "table",
+              "preview",
+              "help",
+              "wordcount",
+            ],
+            toolbar:
+              "undo redo | blocks | code |" +
+              "bold italic forecolor | alignleft aligncenter " +
+              "alignright alignjustify | bullist numlist outdent indent | " +
+              "removeformat | help",
+          }}
+          initialValue={formik.initialValues.ProdDescription}
+          onEditorChange={(content) =>
+            formik.setFieldValue("ProdDescription", content)
+          }
+        />
+      </Box>
+      {descriptionError && (
+        <FormHelperText error sx={{ mx: "14px" }}>
+          La descripción es obligatoria
+        </FormHelperText>
+      )}
       <Separator height={20} />
       <Grid container spacing={1.5} sx={{ mb: 1.5 }}>
         <Grid size={6}>

@@ -1,24 +1,33 @@
 "use client";
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { useState } from "react";
+import { Alert, Box, Button, TextField, Typography } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { authCtrl } from "@/api";
 import { useFormik } from "formik";
 import { initialValues, validationSchema } from "./RegisterForm.form";
+import { getAuthError } from "@/utils/authErrors";
 
 export function RegisterForm() {
   const router = useRouter();
+  const [authError, setAuthError] = useState<string | null>(null);
 
   const formik = useFormik({
     initialValues: initialValues(),
     validationSchema: validationSchema(),
     validateOnChange: false,
     onSubmit: async (formValue) => {
+      setAuthError(null);
+
       try {
         await authCtrl.register(formValue.email, formValue.password);
-        router.push(`/join/confirmation?email=${formValue.email}`);
+        router.push(
+          `/join/confirmation?email=${encodeURIComponent(formValue.email)}`,
+        );
       } catch (error) {
-        console.error(error);
+        const { message, unexpected } = getAuthError(error, "register");
+        if (unexpected) console.error(error);
+        setAuthError(message);
       }
     },
   });
@@ -58,6 +67,11 @@ export function RegisterForm() {
           onChange={formik.handleChange}
           error={!!formik.errors.repeatPassword}
         />
+        {authError && (
+          <Alert severity="error" sx={{ mb: 1.5 }}>
+            {authError}
+          </Alert>
+        )}
 
         <Button
           type="submit"
