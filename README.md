@@ -14,6 +14,8 @@ El cómputo (Lambda), la API (API Gateway) y la autenticación (Cognito) son ser
 
 <img width="1355" height="686" alt="ecommerce-1" src="https://github.com/user-attachments/assets/afa83596-9357-42aa-9676-e6cbb7f1e916" />
 
+<img width="1355" height="686" alt="ecommerce-2" src="https://github.com/user-attachments/assets/58a877a3-5267-4b86-94ff-36f4ee402e15" />
+
 **Demo:** [Ver demo](https://santa-maria-ecommerce.netlify.app)
 
 ## Stack
