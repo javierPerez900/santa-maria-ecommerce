@@ -12,6 +12,8 @@ El cómputo (Lambda), la API (API Gateway) y la autenticación (Cognito) son ser
 | [santaMaria](https://github.com/javierPerez900/santaMaria) | API REST en Go (Lambda + API Gateway) |
 | [santaMariaUser](https://github.com/javierPerez900/santaMariaUser) | Lambda en Go que guarda en la base de datos a cada usuario que confirma su cuenta en Cognito |
 
+<img width="1355" height="686" alt="ecommerce-1" src="https://github.com/user-attachments/assets/afa83596-9357-42aa-9676-e6cbb7f1e916" />
+
 **Demo:** [Ver demo](https://santa-maria-ecommerce.netlify.app)
 
 ## Stack
